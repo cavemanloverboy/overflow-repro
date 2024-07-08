@@ -1,17 +1,7 @@
 use core::mem::size_of;
 
-extern "C" {
-    fn sol_log_(message: *const u8, len: u64);
-    fn sol_set_return_data(data: *const u8, length: u64);
-}
-
-fn sol_log(s: &str) {
-    unsafe { sol_log_(s.as_bytes().as_ptr(), s.as_bytes().len() as u64) }
-}
-
-fn set_return(d: &[u8]) {
-    unsafe { sol_set_return_data(d.as_ptr(), d.len() as u64) };
-}
+mod syscalls;
+use syscalls::*;
 
 macro_rules! log {
     ($($arg:tt)*) => (sol_log(&format!($($arg)*)))
@@ -41,8 +31,11 @@ pub unsafe extern "C" fn entrypoint(mut input: *mut u8) -> u32 {
 }
 
 #[inline(never)]
+#[no_mangle]
 fn corrupt() {
-    let mut oops = [0_u8; 8192];
-    oops[0..8192].fill(5);
+    let mut oops = [0_u8; 4243];
+    oops[0] = 69;
+    oops[1] = 42;
+    oops[2] = 88;
     core::hint::black_box(oops);
 }
