@@ -1,0 +1,15 @@
+[package]
+name = "overflow-repro"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[dependencies]
+
+[dev-dependencies]
+solana-banks-interface = "2.0.1"
+solana-program-test = "2.0.1"
+solana-sdk = "2.0.1"
+tokio = { version = "1.38.0", features = ["full"] }
