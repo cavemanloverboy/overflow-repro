@@ -9,7 +9,7 @@ macro_rules! log {
 
 #[no_mangle]
 pub unsafe extern "C" fn entrypoint(mut input: *mut u8) -> u32 {
-    // In this simple repoducer, there are no input accounts
+    // In this simple reproducer, there are no input accounts
     input = input.add(size_of::<u64>());
 
     // Instruction data length should be 3
