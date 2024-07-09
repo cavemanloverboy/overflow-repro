@@ -30,10 +30,13 @@ pub unsafe extern "C" fn entrypoint(mut input: *mut u8) -> u32 {
 }
 
 #[inline(never)]
+#[no_mangle]
 fn corrupt() {
-    let mut oops = [0_u8; 8192];
-    oops[0..8192].fill(5);
-    std::hint::black_box(oops);
+    let mut oops = [0_u8; 4243];
+    oops[0] = 69;
+    oops[1] = 42;
+    oops[2] = 88;
+    core::hint::black_box(oops);
 }
 ```
 
